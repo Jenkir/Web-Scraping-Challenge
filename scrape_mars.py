@@ -17,98 +17,40 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 8,
    "metadata": {},
-   "outputs": [
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "[WDM] - ====== WebDriver manager ======\n",
-      "[WDM] - Current google-chrome version is 89.0.4389\n",
-      "[WDM] - Get LATEST driver version for 89.0.4389\n"
-     ]
-    },
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "\n",
-      "\n"
-     ]
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "[WDM] - Driver [C:\\Users\\Jenkir\\.wdm\\drivers\\chromedriver\\win32\\89.0.4389.23\\chromedriver.exe] found in cache\n"
-     ]
-    }
-   ],
+   "outputs": [],
    "source": [
     "#Executable path to driver\n",
     "def init_browser():\n",
-    "executable_path = {\"executable_path': chromedriver.exe\"}\n",
-    "return Browser(\"chrome\", **executable_path, headless=True)"
+    "    executable_path = {\"executable_path': chromedriver.exe\"}\n",
+    "    return Browser(\"chrome\", **executable_path, headless=True)"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 10,
    "metadata": {},
    "outputs": [],
    "source": [
     "def scrape ():\n",
     "    browser = init_browser()\n",
-    "    mars_data = {}"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## NASA Mars News"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 3,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "#visit Mars news site via Splinter module\n",
-    "url = 'https://redplanetscience.com/'\n",
-    "browser.visit(url)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 4,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "NASA's Mars 2020 Rover Completes Its First Drive\n",
-      "In a 10-plus-hour marathon, the rover steered, turned and drove in 3-foot (1-meter) increments over small ramps.\n"
-     ]
-    }
-   ],
-   "source": [
-    "#create html object\n",
-    "html = browser.html\n",
+    "    mars_data = {}\n",
     "\n",
-    "#parse HTML using Beautiful Soup\n",
-    "soup = BeautifulSoup(html, 'html.parser')\n",
     "\n",
-    "#scrape site and collect latest news title and paragraph text\n",
-    "news_title = soup.find('div', class_='content_title').text\n",
-    "news_par = soup.find('div', class_='article_teaser_body').text\n",
+    "    url = 'https://redplanetscience.com/'\n",
+    "    browser.visit(url)\n",
+    "    time.sleep(1)\n",
+    "    nasa_html = browser.html\n",
+    "    nasa_soup = BeautifulSoup(nasa_html, 'html.parser')\n",
     "\n",
-    "#display scraped data\n",
-    "print(news_title)\n",
-    "print(news_par)"
+    "\n",
+    "    news_list = nasa_soup.find('ul', class_='item_list')\n",
+    "    first_item = news_list.find('li', class_='slide')\n",
+    "    nasa_headline = first_item.find('div', class_='content_title').text\n",
+    "    nasa_teaser = first_item.find('div', class_='article_teaser_body').text\n",
+    "    mars_data[\"nasa_headline\"] = nasa_headline\n",
+    "    mars_data[\"nasa_teaser\"] = nasa_teaser"
    ]
   },
   {
@@ -120,7 +62,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -131,20 +73,9 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "'https://spaceimages-mars.comhttps://spaceimages-mars.com/image/featured/mars1.jpg'"
-      ]
-     },
-     "execution_count": 6,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
+   "outputs": [],
    "source": [
     "#create html object\n",
     "html_image = browser.html\n",
@@ -166,50 +97,9 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>Description</th>\n",
-       "      <th>Value</th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "Empty DataFrame\n",
-       "Columns: [Description, Value]\n",
-       "Index: []"
-      ]
-     },
-     "execution_count": 9,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
+   "outputs": [],
    "source": [
     "#visit Mars Facts webpage and scrape table containing facts about the planet\n",
     "mars_facts_url = 'https://galaxyfacts-mars.com'\n",
@@ -252,40 +142,9 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "C:\\Users\\Jenkir\\anaconda3\\envs\\PythonData\\lib\\site-packages\\splinter\\driver\\webdriver\\__init__.py:501: FutureWarning: browser.find_link_by_text is deprecated. Use browser.links.find_by_text instead.\n",
-      "  FutureWarning,\n"
-     ]
-    },
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "\n",
-      "Cerberus Hemisphere Enhanced\n",
-      "\n",
-      "https://marshemispheres.com/images/full.jpg\n",
-      "\n",
-      "Schiaparelli Hemisphere Enhanced\n",
-      "\n",
-      "https://marshemispheres.com/images/schiaparelli_enhanced-full.jpg\n",
-      "\n",
-      "Syrtis Major Hemisphere Enhanced\n",
-      "\n",
-      "https://marshemispheres.com/images/syrtis_major_enhanced-full.jpg\n",
-      "\n",
-      "Valles Marineris Hemisphere Enhanced\n",
-      "\n",
-      "https://marshemispheres.com/images/valles_marineris_enhanced-full.jpg\n"
-     ]
-    }
-   ],
+   "outputs": [],
    "source": [
     "# scrape images of Mars' hemispheres from astrogeology site\n",
     "mars_hemisphere_url = 'https://marshemispheres.com'\n",
