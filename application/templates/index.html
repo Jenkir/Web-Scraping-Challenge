@@ -23,50 +23,48 @@
                 </div>
 						
 <!-- news article section -->
-<div class="row"> id="mars-news">
+<div class="row" id="mars-news">
     <div class="col-md-12">
-        <div class = "media>"
+        <div class = "media">
             <div class = "media-body">
-
-                <h2 class="heading"><strong>Latest Mars News</strong>
-                <h3 class="heading">{{ mars.news_title }}</h3>
+                <h2> Latest Mars News</h2>
+                <h4 class="media-heading">{{ mars.news_title }}</h4>
                 <p>{{ mars.news_par }}</p>
             </div>
         </div>
     </div>
 </div>        
-<!-- images section -->
-<div class="row"> id="mars-featured-image">
+<!-- images and facts section -->
+<div class="row" id="mars-featured-image">
     <div class="col-md-8">
-        <h1 class="heading"><strong>Featured Mars Image</strong></h1>
+        <h2> Featured Mars Image</h2>
         <img src="{{ mars.featured_image_url }}" class="img-responsive"
             alt="Mars Images">
             <br>
+    </div>
 </div> 
- 
-
 
 <!-- Hemispheres -->
 <div class="row">
     <br>
-    <h1 class="heading text-center"><strong>Mars Hemisphere</strong></h2>
+    <h1 class="heading text-center"><strong>Mars Hemispheres</strong></h2>
     <div class="col-md-6">
         <div class="col-md-12">
-            {% for pic in mars.hemisphere_image[0:2] %}           
-                <img class = "img img-thumbnail" src="{{pic['url']}}" alt="hemisphere" style="width:50%;">
+            {% for pic in mars.hemisphere_image %}           
+                <img class = "img img-thumbnail" src="{{pic['featured_img_url']}}" alt="hemispheres" style="width:50%;">
                 <div class="caption"style="font-weight: bold;">
-                    {{pic['Title']}}
+                    {{pic['title']}}
                 </div>                                           
             {% endfor %}
         </div>
     </div>
     <div class="col-md-6">
         <div class="col-md-12">
-            {% for pic in mars.hemisphere_image[2:4] %}
+            {% for pic in mars.hemisphere_image %}
                             
-                <img src="{{pic['url']}}" alt="hemisphere" style="width:50%;">
+                <img src="{{pic['featured_img_url']}}" alt="hemisphere" style="width:50%;">
                 <div class="caption "style="font-weight: bold;">
-                    {{pic['Title']}}
+                    {{pic['title']}}
                 </div>                                           
             {% endfor %}
         </div>
