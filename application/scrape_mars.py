@@ -5,18 +5,25 @@
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
 import pandas as pd
-import time
 from webdriver_manager.chrome import ChromeDriverManager
 
-
-#create scrape function
-def scrape():
-
-# MARS NEWS
-    # Set up Splinter (preparing automatic browser and specifying that it is Chrome)
+# Set up Splinter (preparing automatic browser and specifying that it is Chrome)
     # headless = False means that the browser's actions will be displayed
-    executable_path = {'executable_path': ChromeDriverManager().install()}
-    browser = Browser('chrome', **executable_path, headless=False)
+   
+executable_path = {'executable_path': ChromeDriverManager().install()}
+browser = Browser('chrome', **executable_path, headless=False)
+
+def init_browser():
+    executable_path = {'executable_path': 'chromedriver.exe'}
+    browser = Browser('chrome', **executable_path, headless=False) 
+    return browser
+
+mars_data= {}
+#create scrape function
+def news_scrape():
+    browser = init_browser
+# MARS NEWS
+    
 
     #create variable for Mars news site url
 
@@ -30,50 +37,45 @@ def scrape():
     soup = bs(response, 'html.parser')
     
     #retrieve title and paragraph from most recent article
-    news_title = soup.find('div', class_='content_title').text
+    news_title = soup.find('div', class_='content_title').find('a').text
+    print(f"title {news_title}")
+    mars_data['news_title']=news_title
+    
     news_par = soup.find('div', class_='article_teaser_body').text
-   
-    return news_title, news_par
+    mars_data['news_par'] = news_par
+    print(f"paragraph {news_par}")
+    
+    return mars_data
 
 # MARS SPACE IMAGES - Featured Image
 
-def featured_image(browser):
-
-    # Set up Splinter browser)
+def image_scrape():
+    browser = init_browser()
     
-    executable_path = {'executable_path': 'chromedriver.exe'}
-    browser = Browser('chrome', **executable_path, headless=False) 
+    #visit url using Splinter    
+    featured_image_url = 'https://spaceimages-mars.com/image/featured/mars1.jpg'
+    browser.visit(featured_image_url)
     
-    url = 'https://spaceimages-mars.com'
-    browser.visit(url)
-    
-    #code for moving through pages on the website
-    time.sleep(5)
-    browser.click_link_by_partial_text()
-    time.sleep(5)
-    browser.click_link_by_partial_text()
-    time.sleep(5)
-    
+    #create html object
     html_image = browser.html
-    
     mars_soup = bs(html_image, 'html.parser')
 
-    #parse html using Beautiful Soup
+    #parse html using Beautiful Soup and create one full image url
     image_soup = mars_soup.find('figure', 'html.parser')
     link = 'https://spaceimages-mars.com'
     featured_image_url = link + image_soup
 
-    # return data
+    mars_data['featured_image_url']=featured_image_url
+    print(featured_image_url)    
     
-    return featured_image_url
+    # return data
+    return mars_data
 
 
-# In[ ]:
 # MARS FACTS
 
 def mars_facts():
-    executable_path = {'executable_path': 'chromedriver.exe'}
-    browser = Browser('chrome', **executable_path, headless=False)
+   
 
     #create variable for Mars facts url
 
@@ -103,18 +105,19 @@ def mars_facts():
         values.append(td_elements[1].text)
    
     #create dataframe to hold table info.
-    mars_facts = pd.DataFrame({" ": labels,
+    mars_facts_df = pd.DataFrame({" ": labels,
                                "Values": values})
     
     #set new index
-    mars_facts.set_index(" ", inplace=True)
+    mars_facts_df.set_index(" ", inplace=True)
     
     #display dataframe
-    mars_facts
+    mars_facts_df
     
     #convert dataframe to html table string
     
-    html_table = mars_facts.to_html(header=False)
-    return html_table
+    mars_facts_df = mars_facts_df.to_html(header=False)
+    mars_data['mars_facts_df']= mars_facts_df
+    return mars_data
 
 
