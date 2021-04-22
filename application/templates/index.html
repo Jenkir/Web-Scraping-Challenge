@@ -29,7 +29,7 @@
             <div class = "media-body">
                 <h2> Latest Mars News</h2>
                 <h4 class="media-heading">{{ mars.news_title }}</h4>
-                <p>{{ mars.news_par }}</p>
+                <p>{{ mars.news_paragraph }}</p>
             </div>
         </div>
     </div>
@@ -38,11 +38,24 @@
 <div class="row" id="mars-featured-image">
     <div class="col-md-8">
         <h2> Featured Mars Image</h2>
-        <img src="{{ mars.featured_image_url }}" class="img-responsive"
+        <img src='{{ mars.featured_image_url }}' class="img-responsive"
             alt="Mars Images">
             <br>
     </div>
 </div> 
+<!--facts section -->
+<div class="row" id="mars-facts">
+    <div class="col-md-12">
+        <div class = "media">
+            <div class = "media-body">
+                
+                <h4> Mars Facts </h4>
+                <p>{{ mars.mars_facts_html | safe }}</p>
+            </div>
+        </div>
+    </div>
+</div>     
+
 
 <!-- Hemispheres -->
 <div class="row">

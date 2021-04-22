@@ -8,9 +8,14 @@
 from splinter import Browser
 from bs4 import BeautifulSoup
 import pandas as  pd
-import requests
+#import requests
 import time
 from webdriver_manager.chrome import ChromeDriverManager
+
+#Executable path to driver
+executable_path = {'executable_path': ChromeDriverManager().install()}
+browser = Browser('chrome', **executable_path, headless=False)
+
 
 def init_browser():
     executable_path = {'executable_path': 'chromedriver.exe'}
@@ -22,23 +27,10 @@ mars_data= {}
 #create scrape function
 def scrape():
     
-    
-#Executable path to driver
-    executable_path = {'executable_path': ChromeDriverManager().install()}
-    browser = Browser('chrome', **executable_path, headless=False)
-
-
 # ## NASA Mars News
-
-# In[3]:
-
-
 #visit Mars news site via Splinter module
-url = 'https://redplanetscience.com/'
-browser.visit(url)
-
-
-# In[4]:
+    url = 'https://redplanetscience.com/'
+    browser.visit(url)
 
 
 #create html object
@@ -48,19 +40,10 @@ html = browser.html
 news_soup = BeautifulSoup(html, 'html.parser')
 
 
-# In[5]:
-
-
 news_soup
 
 
-# In[6]:
-
-
 news_soup.find('div', class_='content_title').text
-
-
-# In[7]:
 
 
 #scrape site and collect latest news title and paragraph text
@@ -74,15 +57,9 @@ print(news_par)
 
 # # JPL Mars Space Images
 
-# In[8]:
-
-
 #visit Mars featured space image site via Splinter
 featured_image_url = 'https://spaceimages-mars.com/image/featured/mars1.jpg'
 browser.visit(featured_image_url)
-
-
-# In[9]:
 
 
 #create html object
@@ -98,9 +75,6 @@ featured_image_url
 
 # # Mars Facts
 
-# In[10]:
-
-
 mars_facts_url = 'https://galaxyfacts-mars.com'
 
 #read_html looks for table-like elements in the webpage
@@ -114,17 +88,10 @@ mars_df.set_index('Description', inplace=True)
 mars_df
 
 
-# In[11]:
-
-
 mars_df.to_html()
 
 
 # # Mars Hemispheres
-
-# In[12]:
-
-
 # scrape images of Mars' hemispheres from astrogeology site
 mars_hemisphere_url = 'https://marshemispheres.com'
 hemi_dicts = []

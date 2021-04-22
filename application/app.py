@@ -18,9 +18,11 @@ mongo = PyMongo(app)
 def index():
 
     # Find one record of data from the mongo database and set it to a variable
+    #
     mars = mongo.db.mars.find_one()
 
     # Return index.html template and pass it to data retrieved from the db
+    #mars = mars  
     return render_template("index.html", mars=mars)
 
 
@@ -29,7 +31,8 @@ def index():
 def scrape():
 
     # Run the scrape function
-    mars_data = scrape_mars.scrape()
+    #
+    mars_data = scrape_mars.scrape_all()
 
     # Update the Mongo database using update and upsert=True
     mongo.db.mars.update({}, mars_data, upsert=True)
