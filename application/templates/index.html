@@ -23,7 +23,7 @@
                 </div>
 						
 <!-- news article section -->
-<div class="row" id="mars-news">
+<div class="row" id="news">
     <div class="col-md-12">
         <div class = "media">
             <div class = "media-body">
@@ -49,7 +49,7 @@
         <div class = "media">
             <div class = "media-body">
                 
-                <h4> Mars Facts </h4>
+                <h2> Mars Facts </h2>
                 <p>{{ mars.mars_facts_html | safe }}</p>
             </div>
         </div>
@@ -57,31 +57,21 @@
 </div>     
 
 
-<!-- Hemispheres -->
+<!-- hemispheres -->
 <div class="row">
     <br>
-    <h1 class="heading text-center"><strong>Mars Hemispheres</strong></h2>
+    <h2>Mars Hemispheres</h2>
     <div class="col-md-6">
         <div class="col-md-12">
-            {% for pic in mars.hemisphere_image %}           
-                <img class = "img img-thumbnail" src="{{pic['featured_img_url']}}" alt="hemispheres" style="width:50%;">
-                <div class="caption"style="font-weight: bold;">
-                    {{pic['title']}}
+            {% for hemispheres in mars.hemi_list %}           
+                <img class = "thumb" src="{{hemispheres['hemi_list']}}" alt="hemispheres" style="width:50%;">
+                <div class="description" style="font-weight: bold;">
+                    {{hemispheres['title']}}
                 </div>                                           
             {% endfor %}
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="col-md-12">
-            {% for pic in mars.hemisphere_image %}
-                            
-                <img src="{{pic['featured_img_url']}}" alt="hemisphere" style="width:50%;">
-                <div class="caption "style="font-weight: bold;">
-                    {{pic['title']}}
-                </div>                                           
-            {% endfor %}
-        </div>
-    </div>
+    
     
 </div>
 </div>

@@ -67,7 +67,7 @@ def image_scrape():
     html_image = browser.html
     mars_soup = bs(html_image, 'html.parser')
     
-    img_url = mars_soup.find('img', class_='fancybox-image').get('src') 
+    img_url = mars_soup.find('img', class_='headerimage fade-in').get('src') 
     #print(featured_image_url)
     #print(img_url)
     link = f'{featured_image_url}/{img_url}'
