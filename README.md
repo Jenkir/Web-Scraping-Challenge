@@ -3,7 +3,7 @@
 ![image](https://user-images.githubusercontent.com/75215001/130673994-1005e613-9372-40d6-ad0e-8f5cb3595026.png)
 
 For this assignment, I built a web application to scrape four different websites for data related to the Mars Mission. This data is displayed in a single HTML page.
-I comppleted the initial scraping in a Jupyter notebook (see mission_to_mars.ipynb) using BeautifulSoup, Pandas, and Splinter. 
+I completed the initial scraping in a Jupyter notebook (see mission_to_mars.ipynb) using BeautifulSoup, Pandas, and Splinter. 
 
 First, I scraped the Mars news site (https://redplanetscience.com/) to collect the latest news title and paragraph text. Next, I scraped the featured space image site 
 (https://spaceimages-mars.com). I used Splinter to navigate the site and retrieved the image url for the current Featured Mars Image. For the Mars Facts section, I visited the Mars facts webpage (https://galaxyfacts-mars.com) and used Pandas to scrape a table that contained facts about Mars and Earth. Then, I visited the astrogeology site
